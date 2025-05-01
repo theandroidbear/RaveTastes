@@ -8,7 +8,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_margin="10dp"
+        android:layout_margin="16dp"
         app:cardCornerRadius="15dp">
 
         <ImageView
@@ -27,7 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/layOne"
-            android:layout_margin="10dp">
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -48,7 +49,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/layTwo"
-            android:layout_margin="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_toEndOf="@id/layOne">
             <ImageView
                 android:layout_width="24dp"
@@ -71,7 +73,8 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/layTwo"
             android:id="@+id/layThree"
-            android:layout_margin="10dp">
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"

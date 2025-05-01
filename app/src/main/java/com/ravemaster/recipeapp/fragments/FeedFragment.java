@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.ravemaster.recipeapp.adapters.FeatureAdapter;
 import com.ravemaster.recipeapp.api.getfeed.models.Item;
 import com.ravemaster.recipeapp.api.getfeed.models.Recipe;
@@ -47,6 +49,7 @@ public class FeedFragment extends Fragment {
     ImageView imgFeature,userProfile;
     TextView txtFeatureName, txtFeatureRating, txtFeatureTime, txtFeatureServings,txtMealPlanTitle,txtUsername;
     RecyclerView mealPlanRecycler,trendingRecycler,featureRecycler;
+    MaterialToolbar toolbar;
 
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -90,6 +93,7 @@ public class FeedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
         fetch();
+        ((AppCompatActivity)requireActivity()).setSupportActionBar(toolbar);
 
         if (!isfetched){
             feedViewModel.fetchFeedList(false);
@@ -294,10 +298,11 @@ public class FeedFragment extends Fragment {
         txtMealPlanTitle = view.findViewById(R.id.txtMealPlanTitle);
         trendingRecycler = view.findViewById(R.id.trendingRecycler);
         swipeRefreshLayout = view.findViewById(R.id.feedRefresh);
-        txtUsername = view.findViewById(R.id.txtUsername);
-        userProfile = view.findViewById(R.id.userImage);
+//        txtUsername = view.findViewById(R.id.txtUsername);
+//        userProfile = view.findViewById(R.id.userImage);
         lottie = view.findViewById(R.id.noInternetAnimation);
         lottie1 = view.findViewById(R.id.noInternetAnimation1);
         lottie2 = view.findViewById(R.id.noInternetAnimation2);
+        toolbar = view.findViewById(R.id.myToolBar);
     }
 }
