@@ -13,5 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
-app/src/main/java/com/ravemaster/recipeapp/apiKey
+app/src/main/java/com/ravemaster/recipeapp/apiKey/ApiKey.java
 app/src/main/java/com/ravemaster/recipeapp/api/autocomplete/interfaces/GetAutoComplete.java
