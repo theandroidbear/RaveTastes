@@ -1,0 +1,69 @@
+[versions]
+agp = "8.7.3"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
+material = "1.12.0"
+activity = "1.9.3"
+constraintlayout = "2.2.0"
+
+retrofitVersion = "2.11.0"
+gsonVersion = "2.11.0"
+okhttpVersion = "5.0.0-alpha.10"
+loggingVersion = "5.0.0-alpha.10"
+
+glideVersion = "4.16.0"
+
+shimmerVersion = "0.5.0"
+chartVersion = "v3.1.0"
+
+exoplayerVersion = "2.19.1"
+media3Version = "1.4.1"
+googleGmsGoogleServices = "4.4.2"
+firebaseDatabase = "21.0.0"
+firebaseFirestore = "25.1.1"
+splashVersion = "1.0.1"
+
+lottieVersion = "6.6.0"
+
+viewmodelVersion = "2.8.7"
+
+
+
+[libraries]
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+
+viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "viewmodelVersion" }
+
+retrofit = {group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion"}
+gsonConverter = {group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "gsonVersion"}
+okhttp3= {group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion"}
+logging-interceptor= {group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingVersion"}
+
+glide = {group = "com.github.bumptech.glide", name = "glide", version.ref = "glideVersion"}
+
+shimmer-android = {group = "com.facebook.shimmer", name = "shimmer", version.ref = "shimmerVersion"}
+chart-dependency = {group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "chartVersion"}
+exoplayer = {group = "com.google.android.exoplayer", name = "exoplayer", version.ref = "exoplayerVersion"}
+
+media3 = {group = "androidx.media3", name = "media3-exoplayer", version.ref= "media3Version"}
+media3UI = {group = "androidx.media3", name = "media3-ui", version.ref= "media3Version"}
+media3HLS = {group = "androidx.media3", name = "media3-exoplayer-hls", version.ref= "media3Version"}
+firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+
+splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashVersion" }
+
+lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottieVersion" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="15dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/placeholder"
+            android:scaleType="centerCrop"
+            android:id="@+id/imgFeature"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/layOne"
+            android:layout_margin="10dp">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/rating"
+                android:layout_margin="5dp"
+                android:id="@+id/imgFeatureRating"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/imgFeatureRating"
+                android:id="@+id/txtFeatureRating"
+                android:layout_centerVertical="true"
+                android:text="rating"
+                android:layout_margin="5dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/layTwo"
+            android:layout_margin="10dp"
+            android:layout_toEndOf="@id/layOne">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/time"
+                android:layout_margin="5dp"
+                android:id="@+id/imgFeatureTime"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/imgFeatureTime"
+                android:id="@+id/txtFeatureTime"
+                android:layout_centerVertical="true"
+                android:text="10 min"
+                android:layout_margin="5dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/layTwo"
+            android:id="@+id/layThree"
+            android:layout_margin="10dp">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/servings"
+                android:layout_margin="5dp"
+                android:id="@+id/imgFeatureServings"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/imgFeatureServings"
+                android:id="@+id/txtFeatureServing"
+                android:layout_centerVertical="true"
+                android:text="rating"
+                android:layout_margin="5dp"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>
