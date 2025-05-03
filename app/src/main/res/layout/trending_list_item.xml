@@ -16,7 +16,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:id="@+id/imgTrending"
             android:src="@drawable/placeholder"
             android:scaleType="centerCrop"/>
@@ -34,7 +34,7 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"/>
+            android:marqueeRepeatLimit="@integer/material_motion_duration_long_1"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"

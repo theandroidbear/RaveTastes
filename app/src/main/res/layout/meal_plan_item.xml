@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.carousel.MaskableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="150dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginStart="4dp"
     android:layout_marginEnd="4dp"
@@ -32,13 +32,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name"
-            android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:singleLine="true"
+            android:scrollHorizontally="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="@integer/material_motion_duration_long_1"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

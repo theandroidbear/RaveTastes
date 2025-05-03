@@ -50,6 +50,7 @@
         <item name="colorSurfaceContainerHighest">@color/light_theme_surfaceContainerHighest</item>
 
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
 
 
     </style>
@@ -72,6 +73,14 @@
 
     <style name="TextAppearance.App.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorSurface">?attr/colorSurface</item>
     </style>
 
     <style name="Theme.RecipeApp" parent="Base.Theme.RecipeApp" />

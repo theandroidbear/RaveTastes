@@ -7,7 +7,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         android:layout_margin="16dp"
         app:cardCornerRadius="15dp">
 
@@ -43,7 +43,7 @@
                 android:id="@+id/txtFeatureRating"
                 android:layout_centerVertical="true"
                 android:text="rating"
-                android:layout_margin="5dp"/>
+                android:layout_margin="2dp"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -66,7 +66,7 @@
                 android:id="@+id/txtFeatureTime"
                 android:layout_centerVertical="true"
                 android:text="10 min"
-                android:layout_margin="5dp"/>
+                android:layout_margin="2dp"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -89,7 +89,7 @@
                 android:id="@+id/txtFeatureServing"
                 android:layout_centerVertical="true"
                 android:text="rating"
-                android:layout_margin="5dp"/>
+                android:layout_margin="2dp"/>
         </RelativeLayout>
     </RelativeLayout>
 

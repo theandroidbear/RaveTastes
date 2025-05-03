@@ -178,7 +178,8 @@
                     android:layout_marginEnd="16dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="?attr/colorPrimary"/>
+                    android:textColor="?attr/colorPrimary"
+                    android:id="@+id/feedTitle2"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -212,6 +213,27 @@
                         android:id="@+id/noInternetAnimation2"/>
 
                 </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Appetizing appetizers"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorPrimary"
+                    android:id="@+id/feedTitle3"/>
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/viewPagerFeed"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:visibility="visible"/>
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
