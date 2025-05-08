@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.RecipeDetailsActivity"
-    android:fitsSystemWindows="true"
     android:background="?attr/android:colorBackground">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -44,12 +44,15 @@
         <item name="colorSurfaceBright">@color/dark_theme_surfaceBright</item>
         <item name="colorSurfaceContainerLowest">@color/dark_theme_surfaceContainerLowest</item>
         <item name="colorSurfaceContainerLow">@color/dark_theme_surfaceContainerLow</item>
-        <item name="colorSurfaceContainer">@color/dark_theme_surfaceContainer</item>
+        <item name="colorSurfaceContainer">@color/dark_theme_surface</item>
         <item name="colorSurfaceContainerHigh">@color/dark_theme_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/dark_theme_surfaceContainerHighest</item>
 
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
-        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+        <item name="android:statusBarColor">@color/dark_theme_surface</item>
+        <item name="android:navigationBarColor">@color/dark_theme_surface</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
 
     </style>
 
@@ -71,14 +74,6 @@
 
     <style name="TextAppearance.App.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
         <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
-    </style>
-
-    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
-        <item name="colorSurface">?attr/colorSurface</item>
     </style>
 
     <style name="Theme.RecipeApp" parent="Base.Theme.RecipeApp" />

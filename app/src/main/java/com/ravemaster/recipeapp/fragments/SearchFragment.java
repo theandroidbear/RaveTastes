@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -133,7 +134,7 @@ public class SearchFragment extends Fragment {
 
         });
         if (!isFetched){
-            recipesViewModel.fetchRecipesList(offset,5,getMainQuery());
+            recipesViewModel.fetchRecipesList(offset,20,getMainQuery());
             viewModel.fetchAutoComplete("lasagna");
             isFetched = true;
         } else {
@@ -143,7 +144,7 @@ public class SearchFragment extends Fragment {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recipesViewModel.fetchRecipesList(nextPage(),5,getMainQuery());
+                recipesViewModel.fetchRecipesList(nextPage(),20,getMainQuery());
             }
         });
 
@@ -151,9 +152,9 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (offset != 0) {
-                    recipesViewModel.fetchRecipesList(previousPage(offset),5,getMainQuery());
+                    recipesViewModel.fetchRecipesList(previousPage(offset),20,getMainQuery());
                 } else {
-                    recipesViewModel.fetchRecipesList(0,5,getMainQuery());
+                    recipesViewModel.fetchRecipesList(0,20,getMainQuery());
                 }
 
             }
@@ -162,7 +163,7 @@ public class SearchFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                recipesViewModel.fetchRecipesList(offset,5,getMainQuery());
+                recipesViewModel.fetchRecipesList(offset,20,getMainQuery());
                 searchBar.setText("");
             }
         });
@@ -193,7 +194,7 @@ public class SearchFragment extends Fragment {
                         (event != null && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)){
                     String query = v.getText().toString();
 
-                    recipesViewModel.fetchRecipesList(offset,25,setMainQuery(query));
+                    recipesViewModel.fetchRecipesList(offset,20,setMainQuery(query));
                     searchBar.setText(searchView.getText());
                     searchView.hide();
                     // Perform your search logic here
@@ -246,8 +247,7 @@ public class SearchFragment extends Fragment {
     private void showData(RecipeListApiResponse response) {
         adapter = new RecipeListAdapter(getActivity(),response.results,onRecipeClicked);
         recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        recyclerView.setLayoutManager(new GridLayoutManager(requireActivity(),2));
     }
 
     private final OnRecipeClicked onRecipeClicked = new OnRecipeClicked() {
@@ -272,11 +272,11 @@ public class SearchFragment extends Fragment {
     };
 
     private int nextPage(){
-        return offset += 10;
+        return offset += 20;
     }
 
     private int previousPage(int page){
-        return offset -= 10;
+        return offset -= 20;
     }
     private String getMainQuery(){
         return mainQuery;

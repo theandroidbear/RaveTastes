@@ -8,8 +8,7 @@
     tools:context=".activities.RegisterActivity"
     android:clipToPadding="false"
     android:overScrollMode="never"
-    android:scrollbars="none"
-    android:fitsSystemWindows="true">
+    android:scrollbars="none">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

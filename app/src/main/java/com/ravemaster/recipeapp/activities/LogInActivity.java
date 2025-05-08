@@ -36,9 +36,6 @@ public class LogInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-
-        SplashScreen.installSplashScreen(this);
         setContentView(R.layout.activity_log_in);
 
         preferenceManager = new PreferenceManager(this);
