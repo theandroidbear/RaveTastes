@@ -6,6 +6,8 @@ import static android.view.View.VISIBLE;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -50,6 +52,7 @@ import com.ravemaster.recipeapp.db.DBHelper;
 import com.ravemaster.recipeapp.utilities.PreferenceManager;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class RecipeDetailsActivity extends AppCompatActivity {
@@ -90,6 +93,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     ViewPager2 instructionsPager;
     InstructionListAdapter instructionListAdapter;
 
+    TextToSpeech textToSpeech;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +103,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         preferenceManager = new PreferenceManager(RecipeDetailsActivity.this);
         helper = new DBHelper(RecipeDetailsActivity.this);
+        textToSpeech = new TextToSpeech(this, onInitListener);
 
         Intent intent = getIntent();
         id = intent.getIntExtra("id",0);
@@ -444,7 +450,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     }
 
     private void showInstructionsRecycler(ArrayList<Instruction> instructions){
-        instructionListAdapter = new InstructionListAdapter(RecipeDetailsActivity.this);
+        instructionListAdapter = new InstructionListAdapter(RecipeDetailsActivity.this, RecipeDetailsActivity.this, textToSpeech);
         instructionListAdapter.setInstructions(instructions);
         instructionsPager.setAdapter(instructionListAdapter);
         instructionsPager.setOffscreenPageLimit(3);
@@ -484,6 +490,40 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         // Create a chooser for the sharing options
         Intent chooser = Intent.createChooser(shareIntent, "Share via");
         startActivity(chooser);
+    }
+
+    private final TextToSpeech.OnInitListener onInitListener = new TextToSpeech.OnInitListener() {
+        @Override
+        public void onInit(int status) {
+            if (status == TextToSpeech.SUCCESS){
+                textToSpeech.setLanguage(Locale.US);
+                textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                    @Override
+                    public void onStart(String utteranceId) {
+
+                    }
+
+                    @Override
+                    public void onDone(String utteranceId) {
+
+                    }
+
+                    @Override
+                    public void onError(String utteranceId) {
+
+                    }
+                });
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
     }
 
     private void initViews() {
