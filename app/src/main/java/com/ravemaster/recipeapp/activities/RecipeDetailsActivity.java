@@ -1,5 +1,8 @@
 package com.ravemaster.recipeapp.activities;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,15 +14,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
@@ -29,10 +29,12 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ravemaster.recipeapp.R;
 import com.ravemaster.recipeapp.adapters.CreditsAdapter;
+import com.ravemaster.recipeapp.adapters.InstructionListAdapter;
 import com.ravemaster.recipeapp.adapters.SimilarAdapter;
 import com.ravemaster.recipeapp.api.RequestManager;
 import com.ravemaster.recipeapp.api.getrecipedetails.interfaces.RecipeDetailsListener;
@@ -61,6 +63,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     LinearLayout layout, chartLayout, similarLayout;
     RecyclerView recyclerView,creditsRecycler;
 
+    MaterialButton btnNext, btnPrevious;
+
     LottieAnimationView lottie;
 
     SwipeRefreshLayout swipeRefreshLayout;
@@ -82,6 +86,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     String two = "";
     String three = "";
     String four = "";
+
+    ViewPager2 instructionsPager;
+    InstructionListAdapter instructionListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,15 +115,15 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 manager.getRecipeDetails(listener,id);
                 manager.getSimilarRecipes(similarRecipeListener,id);
 
-                similarLayout.setVisibility(View.INVISIBLE);
-                similarPlaceHolder.setVisibility(View.VISIBLE);
+                similarLayout.setVisibility(INVISIBLE);
+                similarPlaceHolder.setVisibility(VISIBLE);
                 similarPlaceHolder.startShimmer();
 
                 layout.setVisibility(View.GONE);
-                placeholder.setVisibility(View.VISIBLE);
+                placeholder.setVisibility(VISIBLE);
                 placeholder.startShimmer();
 
-                lottie.setVisibility(View.INVISIBLE);
+                lottie.setVisibility(INVISIBLE);
 
             }
         });
@@ -162,6 +169,54 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             }
         });
 
+        instructionsPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                btnPrevious.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
+                btnNext.setVisibility(position == instructionsPager.getAdapter().getItemCount() - 1 ? View.INVISIBLE : View.VISIBLE);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+            }
+        });
+
+
+        btnNext.setOnClickListener(v->{
+            int currentPage = instructionsPager.getCurrentItem();
+            int totalPages= instructionsPager.getAdapter().getItemCount();
+
+            if (currentPage+1<totalPages){
+                instructionsPager.setCurrentItem(instructionsPager.getCurrentItem()+1,true);
+//                if (currentPage+1==totalPages-1){
+//                    btnPrevious.setVisibility(INVISIBLE);
+//                } else {
+//                    btnPrevious.setVisibility(VISIBLE);
+//                }
+            }
+        });
+
+        btnPrevious.setOnClickListener(v->{
+            int currentPage = instructionsPager.getCurrentItem();
+            int totalPages= instructionsPager.getAdapter().getItemCount();
+
+            if (currentPage>0){
+                instructionsPager.setCurrentItem(currentPage-1,true);
+//                if (currentPage-1==0){
+//                    btnNext.setVisibility(INVISIBLE);
+//                } else{
+//                    btnNext.setVisibility(VISIBLE);
+//                }
+            }
+        });
+
     }
 
     private void addToDatabase() {
@@ -184,8 +239,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             swipeRefreshLayout.setRefreshing(false);
 
             similarPlaceHolder.stopShimmer();
-            similarPlaceHolder.setVisibility(View.INVISIBLE);
-            similarLayout.setVisibility(View.VISIBLE);
+            similarPlaceHolder.setVisibility(INVISIBLE);
+            similarLayout.setVisibility(VISIBLE);
 
             showSimilarRecipes(response);
         }
@@ -196,8 +251,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             swipeRefreshLayout.setRefreshing(false);
 
             similarPlaceHolder.stopShimmer();
-            similarPlaceHolder.setVisibility(View.INVISIBLE);
-            similarLayout.setVisibility(View.INVISIBLE);
+            similarPlaceHolder.setVisibility(INVISIBLE);
+            similarLayout.setVisibility(INVISIBLE);
 
             if (message.contains("timeout")||message.contains("429")||message.contains("unable")){
                 Toast.makeText(RecipeDetailsActivity.this, "Unable to similar recipes!", Toast.LENGTH_SHORT).show();
@@ -207,15 +262,15 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         @Override
         public void onLoading(boolean isLoading) {
             if (isLoading){
-                similarLayout.setVisibility(View.INVISIBLE);
+                similarLayout.setVisibility(INVISIBLE);
                 similarPlaceHolder.startShimmer();
             } else {
 
                 swipeRefreshLayout.setRefreshing(false);
 
                 similarPlaceHolder.stopShimmer();
-                similarPlaceHolder.setVisibility(View.INVISIBLE);
-                similarLayout.setVisibility(View.VISIBLE);
+                similarPlaceHolder.setVisibility(INVISIBLE);
+                similarLayout.setVisibility(VISIBLE);
             }
         }
     };
@@ -242,9 +297,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         public void onResponse(RecipeDetailApiResponse response, String message) {
             swipeRefreshLayout.setRefreshing(false);
             placeholder.stopShimmer();
-            placeholder.setVisibility(View.INVISIBLE);
-            layout.setVisibility(View.VISIBLE);
-            lottie.setVisibility(View.INVISIBLE);
+            placeholder.setVisibility(INVISIBLE);
+            layout.setVisibility(VISIBLE);
+            lottie.setVisibility(INVISIBLE);
             showData(response);
         }
 
@@ -252,18 +307,18 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         public void onFailure(String message) {
             swipeRefreshLayout.setRefreshing(false);
             placeholder.stopShimmer();
-            placeholder.setVisibility(View.INVISIBLE);
-            layout.setVisibility(View.INVISIBLE);
+            placeholder.setVisibility(INVISIBLE);
+            layout.setVisibility(INVISIBLE);
             description.setText(message);
             Toast.makeText(RecipeDetailsActivity.this, "Unable to show details", Toast.LENGTH_SHORT).show();
-            lottie.setVisibility(View.VISIBLE);
+            lottie.setVisibility(VISIBLE);
             lottie.animate();
         }
 
         @Override
         public void onLoading(boolean isLoading) {
             if (isLoading){
-                layout.setVisibility(View.INVISIBLE);
+                layout.setVisibility(INVISIBLE);
                 placeholder.startShimmer();
 
             } else {
@@ -271,8 +326,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
 
                 placeholder.stopShimmer();
-                placeholder.setVisibility(View.INVISIBLE);
-                layout.setVisibility(View.VISIBLE);
+                placeholder.setVisibility(INVISIBLE);
+                layout.setVisibility(VISIBLE);
             }
         }
     };
@@ -331,7 +386,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         if (response.nutrition.calories != 0 || response.nutrition.carbohydrates != 0||
         response.nutrition.sugar != 0 || response.nutrition.protein != 0||
         response.nutrition.fat != 0 || response.nutrition.fiber != 0){
-            chartLayout.setVisibility(View.VISIBLE);
+            chartLayout.setVisibility(VISIBLE);
 
             ArrayList<PieEntry> entries = new ArrayList<>();
             entries.add(new PieEntry((float) response.nutrition.calories, "Calories"));
@@ -376,16 +431,42 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             builder2.append(String.valueOf(count++) +".\t").append(i.display_text).append("\n\n");
         }
         four = builder2.toString();
-        instructions.setText(four);
 
         videoUrl = (String) response.video_url;
 
         if (!(videoUrl == null)){
-            btnPlayButton.setVisibility(View.VISIBLE);
+            btnPlayButton.setVisibility(VISIBLE);
         }
 
         showCreditsRecycler(response);
+        showInstructionsRecycler(response.instructions);
 
+    }
+
+    private void showInstructionsRecycler(ArrayList<Instruction> instructions){
+        instructionListAdapter = new InstructionListAdapter(RecipeDetailsActivity.this);
+        instructionListAdapter.setInstructions(instructions);
+        instructionsPager.setAdapter(instructionListAdapter);
+        instructionsPager.setOffscreenPageLimit(3);
+        instructionsPager.setPageTransformer((page, position) -> {
+            float offset = position * -(30); // Adjust spacing between items
+            page.setTranslationX(offset);
+            page.setScaleY(1 - (0.1f * Math.abs(position))); // Optional: Scale effect
+        });
+
+        hideButtons();
+
+    }
+
+    private void hideButtons(){
+        if (instructionsPager.getCurrentItem() == 0){
+            btnPrevious.setVisibility(INVISIBLE);
+        } else if (instructionsPager.getCurrentItem() == instructionsPager.getChildCount()-1){
+            btnNext.setVisibility(INVISIBLE);
+        } else {
+            btnNext.setVisibility(VISIBLE);
+            btnPrevious.setVisibility(VISIBLE);
+        }
     }
 
     private void showCreditsRecycler(RecipeDetailApiResponse response) {
@@ -409,6 +490,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         goBack = findViewById(R.id.btnGoBack);
         save = findViewById(R.id.btnMore);
         authorsCardView = findViewById(R.id.authorsCardView);
+        btnNext = findViewById(R.id.btnNextStep);
+        btnPrevious = findViewById(R.id.btnPrevStep);
 
         imgRecipe = findViewById(R.id.imgRecipeDetails);
 
@@ -418,7 +501,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         time = findViewById(R.id.txtDetailTime);
         servings = findViewById(R.id.txtDetailServings);
         ingredients = findViewById(R.id.txtIngredients);
-        instructions = findViewById(R.id.txtInstructions);
 
         placeholder = findViewById(R.id.detailPlaceHolderLayout);
         similarPlaceHolder = findViewById(R.id.similarPlaceHolderLayout);
@@ -436,5 +518,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         swipeRefreshLayout = findViewById(R.id.recipeRefresh);
 
         lottie = findViewById(R.id.noInternetAnimation4);
+        instructionsPager = findViewById(R.id.instructionsPager);
     }
 }

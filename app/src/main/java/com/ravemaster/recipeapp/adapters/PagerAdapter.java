@@ -54,8 +54,6 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.PagerViewHol
         double percent = ((double) positive/ total)*100;
 
         String rating = String.format("%.1f%%",percent);
-
-        holder.rating.setText(rating);
         Glide.with(context)
                 .load(item.thumbnail_url)
                 .placeholder(R.drawable.placeholder)
@@ -77,13 +75,12 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.PagerViewHol
 
     static class PagerViewHolder extends RecyclerView.ViewHolder {
         ImageView pagerImage;
-        TextView name, rating;
+        TextView name;
         RelativeLayout layout;
         public PagerViewHolder(@NonNull View itemView) {
             super(itemView);
             pagerImage = itemView.findViewById(R.id.viewPagerImage);
             name = itemView.findViewById(R.id.pagerName);
-            rating = itemView.findViewById(R.id.txtPagerRating);
             layout = itemView.findViewById(R.id.feedTwoLayout);
         }
     }

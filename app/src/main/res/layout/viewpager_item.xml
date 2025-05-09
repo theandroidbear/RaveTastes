@@ -47,26 +47,6 @@
             android:layout_gravity="start"
             android:textAlignment="viewStart"/>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/rating"
-                android:layout_marginStart="5dp"
-                android:layout_centerVertical="true"
-                android:id="@+id/imgPagerRating"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/imgPagerRating"
-                android:id="@+id/txtPagerRating"
-                android:layout_centerVertical="true"
-                android:text="rating"
-                android:layout_margin="5dp"/>
-        </RelativeLayout>
-
     </LinearLayout>
 
 
