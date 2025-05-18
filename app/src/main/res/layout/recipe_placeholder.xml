@@ -1,32 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="150dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    style="@style/Widget.Material3.CardView.Elevated"
+    android:layout_margin="8dp">
 
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="15dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#DDDDDD"
-                android:scaleType="centerCrop"/>
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="112.5dp"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:background="#DDDDDD"
+            android:layout_alignParentEnd="true"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:background="#DDDDDD"
-                android:textStyle="bold"
                 android:textSize="18sp"
-                android:layout_margin="10dp"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                android:textStyle="bold"
+                android:layout_margin="5dp"
+                android:id="@+id/txtRecipeTitleDummy"
+                android:layout_alignParentTop="true"/>
 
-</LinearLayout>
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="#DDDDDD"
+                android:layout_margin="5dp"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:layout_below="@id/txtRecipeTitleDummy"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layOne">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="#DDDDDD"
+                        android:layout_margin="5dp"
+                        android:id="@+id/imgFeatureRatingDummy"
+                        android:layout_centerVertical="true"/>
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/imgFeatureRatingDummy"
+                        android:layout_centerVertical="true"
+                        android:background="#DDDDDD"
+                        android:layout_margin="2dp"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/layOne"
+                    android:id="@+id/layThree"
+                    android:layout_marginStart="10dp">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="#DDDDDD"
+                        android:layout_margin="5dp"
+                        android:id="@+id/imgFeatureServingsDummy"
+                        android:layout_centerVertical="true"/>
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/imgFeatureServingsDummy"
+                        android:layout_centerVertical="true"
+                        android:background="#DDDDDD"
+                        android:layout_margin="2dp"/>
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

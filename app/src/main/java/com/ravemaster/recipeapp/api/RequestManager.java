@@ -63,10 +63,10 @@ public class RequestManager {
             }
         });
     }
-    public void getRecipeList(RecipeListListener listener, int from, int size, String query){
+    public void getRecipeList(RecipeListListener listener, int from, int size, String tags, String query){
         listener.onLoading(true);
         GetRecipeList getRecipeList = retrofit.create(GetRecipeList.class);
-        Call<RecipeListApiResponse> call = getRecipeList.getRecipeList(ApiKey.getApiKey(),"tasty.p.rapidapi.com",from,size,query);
+        Call<RecipeListApiResponse> call = getRecipeList.getRecipeList(ApiKey.getApiKey(),"tasty.p.rapidapi.com",from,size,tags,query);
         call.enqueue(new Callback<RecipeListApiResponse>() {
             @Override
             public void onResponse(Call<RecipeListApiResponse> call, Response<RecipeListApiResponse> response) {

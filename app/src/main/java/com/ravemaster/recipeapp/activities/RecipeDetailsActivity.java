@@ -201,25 +201,13 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
             if (currentPage+1<totalPages){
                 instructionsPager.setCurrentItem(instructionsPager.getCurrentItem()+1,true);
-//                if (currentPage+1==totalPages-1){
-//                    btnPrevious.setVisibility(INVISIBLE);
-//                } else {
-//                    btnPrevious.setVisibility(VISIBLE);
-//                }
             }
         });
 
         btnPrevious.setOnClickListener(v->{
             int currentPage = instructionsPager.getCurrentItem();
-            int totalPages= instructionsPager.getAdapter().getItemCount();
-
             if (currentPage>0){
                 instructionsPager.setCurrentItem(currentPage-1,true);
-//                if (currentPage-1==0){
-//                    btnNext.setVisibility(INVISIBLE);
-//                } else{
-//                    btnNext.setVisibility(VISIBLE);
-//                }
             }
         });
 
@@ -228,9 +216,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private void addToDatabase() {
         String s1 = name.getText().toString();
         String s2 = description.getText().toString();
-        String s3 = ingredients.getText().toString();
-        String s4 = instructions.getText().toString();
-        boolean insertData = helper.insertData(s1,s2,s3,s4);
+        boolean insertData = helper.insertData(s1,s2,three,four);
         if (insertData){
             Toast.makeText(RecipeDetailsActivity.this, "Added to offline library.", Toast.LENGTH_SHORT).show();
         } else {
@@ -379,11 +365,12 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         }
 
         StringBuilder builder1 = new StringBuilder();
+        int ingredientCount = 1;
         for (int i :
                 positions) {
             for (Component c :
                     response.sections.get(i).components) {
-                builder1.append("~ ").append(c.raw_text).append("\n");
+                builder1.append("~\t").append(c.raw_text).append("\n\n");
             }
         }
         three = builder1.toString();

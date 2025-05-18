@@ -128,75 +128,75 @@ public class FeedFragment extends Fragment {
             }
         });
     }
-     private void fetch(){
-         feedViewModel.getFeedsLiveData().observe(getViewLifecycleOwner(), response ->{
-             swipeRefreshLayout.setRefreshing(false);
-             hideAnimation();
-             stopShimmer();
-             showLayouts();
-             showData(response);
-         });
-         feedViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), message->{
-             swipeRefreshLayout.setRefreshing(false);
-             Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
-             stopShimmer();
-             hideLayouts();
-             showAnimation();
-         });
-         feedViewModel.getLoadingLiveData().observe(getViewLifecycleOwner(), isLoading->{
-             if (isLoading){
-                 txtFeatureName.setText("Featured:");
-                 hideAnimation();
-                 hideLayouts();
-                 startShimmer();
-             }else{
-                 swipeRefreshLayout.setRefreshing(false);
-                 stopShimmer();
-                 hideAnimation();
-             }
-         });
-     }
-     private void showAnimation(){
-         lottie.setVisibility(VISIBLE);
-         lottie.animate();
-         lottie1.setVisibility(VISIBLE);
-         lottie1.animate().setStartDelay(2500).setDuration(2500);
-         lottie2.setVisibility(VISIBLE);
-         lottie2.animate().setStartDelay(5000).setDuration(5000);
-     }
-     private void hideAnimation(){
-         lottie.setVisibility(GONE);
-         lottie1.setVisibility(GONE);
-         lottie2.setVisibility(GONE);
-     }
-     private void startShimmer(){
-         featurePlaceHolder.setVisibility(VISIBLE);
-         featurePlaceHolder.startShimmer();
-         mealPlanPlaceHolder.setVisibility(VISIBLE);
-         mealPlanPlaceHolder.startShimmer();
-         trendingPlaceHolder.setVisibility(VISIBLE);
-         trendingPlaceHolder.startShimmer();
-     }
-     private void stopShimmer(){
-         featurePlaceHolder.stopShimmer();
-         featurePlaceHolder.setVisibility(GONE);
-         mealPlanPlaceHolder.stopShimmer();
-         mealPlanPlaceHolder.setVisibility(GONE);
-         trendingPlaceHolder.stopShimmer();
-         trendingPlaceHolder.setVisibility(GONE);
-     }
-     private void showLayouts(){
-         featureLayout.setVisibility(VISIBLE);
-         mealPlanLayout.setVisibility(VISIBLE);
-         trendingLayout.setVisibility(VISIBLE);
-         pager.setVisibility(VISIBLE);
-     }
-     private void hideLayouts(){
-         featureLayout.setVisibility(GONE);
-         mealPlanLayout.setVisibility(GONE);
-         trendingLayout.setVisibility(GONE);
-         pager.setVisibility(GONE);
-     }
+    private void fetch(){
+        feedViewModel.getFeedsLiveData().observe(getViewLifecycleOwner(), response ->{
+            swipeRefreshLayout.setRefreshing(false);
+            hideAnimation();
+            stopShimmer();
+            showLayouts();
+            showData(response);
+        });
+        feedViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), message->{
+            swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
+            stopShimmer();
+            hideLayouts();
+            showAnimation();
+        });
+        feedViewModel.getLoadingLiveData().observe(getViewLifecycleOwner(), isLoading->{
+            if (isLoading){
+                txtFeatureName.setText("Featured:");
+                hideAnimation();
+                hideLayouts();
+                startShimmer();
+            }else{
+                swipeRefreshLayout.setRefreshing(false);
+                stopShimmer();
+                hideAnimation();
+            }
+        });
+    }
+    private void showAnimation(){
+        lottie.setVisibility(VISIBLE);
+        lottie.animate();
+        lottie1.setVisibility(VISIBLE);
+        lottie1.animate().setStartDelay(2500).setDuration(2500);
+        lottie2.setVisibility(VISIBLE);
+        lottie2.animate().setStartDelay(5000).setDuration(5000);
+    }
+    private void hideAnimation(){
+        lottie.setVisibility(GONE);
+        lottie1.setVisibility(GONE);
+        lottie2.setVisibility(GONE);
+    }
+    private void startShimmer(){
+        featurePlaceHolder.setVisibility(VISIBLE);
+        featurePlaceHolder.startShimmer();
+        mealPlanPlaceHolder.setVisibility(VISIBLE);
+        mealPlanPlaceHolder.startShimmer();
+        trendingPlaceHolder.setVisibility(VISIBLE);
+        trendingPlaceHolder.startShimmer();
+    }
+    private void stopShimmer(){
+        featurePlaceHolder.stopShimmer();
+        featurePlaceHolder.setVisibility(GONE);
+        mealPlanPlaceHolder.stopShimmer();
+        mealPlanPlaceHolder.setVisibility(GONE);
+        trendingPlaceHolder.stopShimmer();
+        trendingPlaceHolder.setVisibility(GONE);
+    }
+    private void showLayouts(){
+        featureLayout.setVisibility(VISIBLE);
+        mealPlanLayout.setVisibility(VISIBLE);
+        trendingLayout.setVisibility(VISIBLE);
+        pager.setVisibility(VISIBLE);
+    }
+    private void hideLayouts(){
+        featureLayout.setVisibility(GONE);
+        mealPlanLayout.setVisibility(GONE);
+        trendingLayout.setVisibility(GONE);
+        pager.setVisibility(GONE);
+    }
 
     private void showData(FeedsApiResponse response) {
         if (response.results.get(0).item.user_ratings == null){

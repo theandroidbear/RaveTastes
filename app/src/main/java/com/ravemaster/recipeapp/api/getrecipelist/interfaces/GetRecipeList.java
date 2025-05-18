@@ -18,7 +18,8 @@ public interface GetRecipeList {
             @Header("x-rapidapi-key")String apiKey,
             @Header("x-rapidapi-host")String apiHost,
             @Query("from") int from,
-            @Query("size") int size ,
+            @Query("size") int size,
+            @Query("tags") String tags,
             @Query("q") String query
     );
 }

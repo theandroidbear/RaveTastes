@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Slow x0.5"
+        android:id="@+id/slowSpeed"/>
+    <item
+        android:title="Normal x1.0"
+        android:id="@+id/normalSpeed"/>
+    <item
+        android:title="Fast x1.5"
+        android:id="@+id/fastSpeed"/>
+</menu>

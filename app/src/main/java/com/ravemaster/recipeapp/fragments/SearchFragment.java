@@ -25,7 +25,10 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.search.SearchBar;
 import com.google.android.material.search.SearchView;
 import com.ravemaster.recipeapp.R;
@@ -43,6 +46,9 @@ import com.ravemaster.recipeapp.viewmodelfactories.RecipeListViewModelFactory;
 import com.ravemaster.recipeapp.viewmodels.AutoCompleteViewModel;
 import com.ravemaster.recipeapp.viewmodels.RecipesViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchFragment extends Fragment {
 
     public ShimmerFrameLayout recipePlaceHolder;
@@ -51,13 +57,13 @@ public class SearchFragment extends Fragment {
     SearchView searchView;
     LottieAnimationView lottie;
 
+    ChipGroup chipGroup;
+
     SwipeRefreshLayout swipeRefreshLayout;
 
     RecyclerView recyclerView,autoRecycler;
     RecipeListAdapter adapter;
     AutoCompleteAdapter autoCompleteAdapter;
-
-    FloatingActionButton btnNext, btnPrev;
 
     RequestManager manager;
 
@@ -66,6 +72,8 @@ public class SearchFragment extends Fragment {
 
     AutoCompleteViewModel viewModel;
     AutoCompleteFactory autoCompleteFactory;
+
+    ArrayList<String> selected = new ArrayList<>();
 
     public int offset = 0;
     public String mainQuery = "";
@@ -134,36 +142,50 @@ public class SearchFragment extends Fragment {
 
         });
         if (!isFetched){
-            recipesViewModel.fetchRecipesList(offset,20,getMainQuery());
+            recipesViewModel.fetchRecipesList(offset,20,"",getMainQuery());
             viewModel.fetchAutoComplete("lasagna");
             isFetched = true;
         } else {
             Toast.makeText(requireActivity(), "Data has already been fetched", Toast.LENGTH_SHORT).show();
         }
 
-        btnNext.setOnClickListener(new View.OnClickListener() {
+        chipGroup.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener() {
             @Override
-            public void onClick(View v) {
-                recipesViewModel.fetchRecipesList(nextPage(),20,getMainQuery());
-            }
-        });
-
-        btnPrev.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (offset != 0) {
-                    recipesViewModel.fetchRecipesList(previousPage(offset),20,getMainQuery());
+            public void onCheckedChanged(@NonNull ChipGroup group, @NonNull List<Integer> checkedIds) {
+                if (checkedIds.isEmpty()){
+                    recipesViewModel.fetchRecipesList(0,20,"",mainQuery);
                 } else {
-                    recipesViewModel.fetchRecipesList(0,20,getMainQuery());
+                    for (int i:
+                            checkedIds){
+                        if (i == R.id.chipVegetarian){
+                            recipesViewModel.fetchRecipesList(0,20,"vegetarian",mainQuery);
+                        }
+                        else if (i == R.id.chipUnder30Mins){
+                            recipesViewModel.fetchRecipesList(0,20,"under_30_minutes",mainQuery);
+                        }else if (i == R.id.chipBreakfast){
+                            recipesViewModel.fetchRecipesList(0,20,"breakfast",mainQuery);
+                        }
+                        else if (i == R.id.chipDinner){
+                            recipesViewModel.fetchRecipesList(0,20,"dinner",mainQuery);
+                        }
+                        else if (i == R.id.chipParty){
+                            recipesViewModel.fetchRecipesList(0,20,"party",mainQuery);
+                        }
+                        else if (i == R.id.chipThai){
+                            recipesViewModel.fetchRecipesList(0,20,"thai",mainQuery);
+                        }
+                        else if (i == R.id.chipItalian){
+                            recipesViewModel.fetchRecipesList(0,20,"italian",mainQuery);
+                        }
+                    }
                 }
-
             }
         });
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                recipesViewModel.fetchRecipesList(offset,20,getMainQuery());
+                recipesViewModel.fetchRecipesList(offset,20,"",getMainQuery());
                 searchBar.setText("");
             }
         });
@@ -194,7 +216,7 @@ public class SearchFragment extends Fragment {
                         (event != null && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)){
                     String query = v.getText().toString();
 
-                    recipesViewModel.fetchRecipesList(offset,20,setMainQuery(query));
+                    recipesViewModel.fetchRecipesList(offset,20,"",setMainQuery(query));
                     searchBar.setText(searchView.getText());
                     searchView.hide();
                     // Perform your search logic here
@@ -247,7 +269,7 @@ public class SearchFragment extends Fragment {
     private void showData(RecipeListApiResponse response) {
         adapter = new RecipeListAdapter(getActivity(),response.results,onRecipeClicked);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(requireActivity(),2));
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
     }
 
     private final OnRecipeClicked onRecipeClicked = new OnRecipeClicked() {
@@ -267,7 +289,7 @@ public class SearchFragment extends Fragment {
             recipeLayout.setVisibility(View.INVISIBLE);
             recipePlaceHolder.setVisibility(View.VISIBLE);
             recipePlaceHolder.startShimmer();
-            recipesViewModel.fetchRecipesList(offset,10, result.display);
+            recipesViewModel.fetchRecipesList(offset,10,"", result.display);
         }
     };
 
@@ -293,8 +315,7 @@ public class SearchFragment extends Fragment {
         swipeRefreshLayout = view.findViewById(R.id.searchRefresh);
         searchBar = view.findViewById(R.id.mySearch_bar);
         searchView = view.findViewById(R.id.mySearchView);
-        btnNext = view.findViewById(R.id.btnNext);
-        btnPrev = view.findViewById(R.id.btnPrev);
         lottie = view.findViewById(R.id.noInternetAnimation3);
+        chipGroup = view.findViewById(R.id.tagsChips);
     }
 }
