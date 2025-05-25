@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.loadingindicator.LoadingIndicator;
 import com.ravemaster.recipeapp.adapters.FeatureAdapter;
 import com.ravemaster.recipeapp.adapters.PagerAdapter;
 import com.ravemaster.recipeapp.api.getfeed.models.Item;
@@ -52,12 +54,14 @@ import java.util.List;
 public class FeedFragment extends Fragment {
 
     public ShimmerFrameLayout featurePlaceHolder, featurePlaceHolder1, mealPlanPlaceHolder,trendingPlaceHolder;
-    public LinearLayout featureLayout,featureLayout1,mealPlanLayout,trendingLayout;
+    public LinearLayout featureLayout,featureLayout1,mealPlanLayout,trendingLayout, mainLayout;
     ImageView imgFeature;
     TextView txtFeatureName, txtFeatureRating, txtFeatureTime, txtFeatureServings,txtMealPlanTitle,txtUsername,feedTitle2,feedTitle3;
     RecyclerView mealPlanRecycler,trendingRecycler,featureRecycler;
     MaterialToolbar toolbar;
     ViewPager2 pager;
+
+    RelativeLayout loadingLayout, errorLayout;
 
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -95,7 +99,7 @@ public class FeedFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_feed, container, false);
+        return inflater.inflate(R.layout.new_feed_fragment, container, false);
     }
 
     @Override
@@ -110,6 +114,7 @@ public class FeedFragment extends Fragment {
             isfetched = true;
         } else {
             Toast.makeText(requireActivity(), "Data has already been fetched", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
         }
 
         imgFeature.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +150,6 @@ public class FeedFragment extends Fragment {
         });
         feedViewModel.getLoadingLiveData().observe(getViewLifecycleOwner(), isLoading->{
             if (isLoading){
-                txtFeatureName.setText("Featured:");
                 hideAnimation();
                 hideLayouts();
                 startShimmer();
@@ -157,45 +161,51 @@ public class FeedFragment extends Fragment {
         });
     }
     private void showAnimation(){
+        errorLayout.setVisibility(VISIBLE);
         lottie.setVisibility(VISIBLE);
         lottie.animate();
-        lottie1.setVisibility(VISIBLE);
-        lottie1.animate().setStartDelay(2500).setDuration(2500);
-        lottie2.setVisibility(VISIBLE);
-        lottie2.animate().setStartDelay(5000).setDuration(5000);
+//        lottie1.setVisibility(VISIBLE);
+//        lottie1.animate().setStartDelay(2500).setDuration(2500);
+//        lottie2.setVisibility(VISIBLE);
+//        lottie2.animate().setStartDelay(5000).setDuration(5000);
     }
     private void hideAnimation(){
+        errorLayout.setVisibility(GONE);
         lottie.setVisibility(GONE);
-        lottie1.setVisibility(GONE);
-        lottie2.setVisibility(GONE);
+//        lottie1.setVisibility(GONE);
+//        lottie2.setVisibility(GONE);
     }
     private void startShimmer(){
-        featurePlaceHolder.setVisibility(VISIBLE);
-        featurePlaceHolder.startShimmer();
-        mealPlanPlaceHolder.setVisibility(VISIBLE);
-        mealPlanPlaceHolder.startShimmer();
-        trendingPlaceHolder.setVisibility(VISIBLE);
-        trendingPlaceHolder.startShimmer();
+        loadingLayout.setVisibility(VISIBLE);
+//        featurePlaceHolder.setVisibility(VISIBLE);
+//        featurePlaceHolder.startShimmer();
+//        mealPlanPlaceHolder.setVisibility(VISIBLE);
+//        mealPlanPlaceHolder.startShimmer();
+//        trendingPlaceHolder.setVisibility(VISIBLE);
+//        trendingPlaceHolder.startShimmer();
     }
     private void stopShimmer(){
-        featurePlaceHolder.stopShimmer();
-        featurePlaceHolder.setVisibility(GONE);
-        mealPlanPlaceHolder.stopShimmer();
-        mealPlanPlaceHolder.setVisibility(GONE);
-        trendingPlaceHolder.stopShimmer();
-        trendingPlaceHolder.setVisibility(GONE);
+        loadingLayout.setVisibility(GONE);
+//        featurePlaceHolder.stopShimmer();
+//        featurePlaceHolder.setVisibility(GONE);
+//        mealPlanPlaceHolder.stopShimmer();
+//        mealPlanPlaceHolder.setVisibility(GONE);
+//        trendingPlaceHolder.stopShimmer();
+//        trendingPlaceHolder.setVisibility(GONE);
     }
     private void showLayouts(){
-        featureLayout.setVisibility(VISIBLE);
-        mealPlanLayout.setVisibility(VISIBLE);
-        trendingLayout.setVisibility(VISIBLE);
-        pager.setVisibility(VISIBLE);
+        mainLayout.setVisibility(VISIBLE);
+//        featureLayout.setVisibility(VISIBLE);
+//        mealPlanLayout.setVisibility(VISIBLE);
+//        trendingLayout.setVisibility(VISIBLE);
+//        pager.setVisibility(VISIBLE);
     }
     private void hideLayouts(){
-        featureLayout.setVisibility(GONE);
-        mealPlanLayout.setVisibility(GONE);
-        trendingLayout.setVisibility(GONE);
-        pager.setVisibility(GONE);
+        mainLayout.setVisibility(GONE);
+//        featureLayout.setVisibility(GONE);
+//        mealPlanLayout.setVisibility(GONE);
+//        trendingLayout.setVisibility(GONE);
+//        pager.setVisibility(GONE);
     }
 
     private void showData(FeedsApiResponse response) {
@@ -206,7 +216,7 @@ public class FeedFragment extends Fragment {
         } else {
             showFeatured(response);
             featureLayout.setVisibility(VISIBLE);
-            featureLayout1.setVisibility(View.GONE);
+            featureLayout1.setVisibility(GONE);
         }
         showMealPlanAdapter(response);
         showTrendingRecipes(response);
@@ -318,13 +328,14 @@ public class FeedFragment extends Fragment {
     };
 
     private void initViews(View view) {
-        featurePlaceHolder = view.findViewById(R.id.featurePlaceholderLayout);
-        mealPlanPlaceHolder = view.findViewById(R.id.mealPlanPlaceholderLayout);
-        trendingPlaceHolder = view.findViewById(R.id.trendingPlaceholderLayout);
-        featureLayout = view.findViewById(R.id.featureLayout);
-        featureLayout1 = view.findViewById(R.id.featureLayout1);
-        mealPlanLayout = view.findViewById(R.id.mealPlanLayout);
-        trendingLayout = view.findViewById(R.id.trendingLayout);
+//        featurePlaceHolder = view.findViewById(R.id.featurePlaceholderLayout);
+//        mealPlanPlaceHolder = view.findViewById(R.id.mealPlanPlaceholderLayout);
+//        trendingPlaceHolder = view.findViewById(R.id.trendingPlaceholderLayout);
+        featureLayout = view.findViewById(R.id.featureLayout1);
+        featureLayout1 = view.findViewById(R.id.featureLayout2);
+        mainLayout = view.findViewById(R.id.feedMainContent);
+//        mealPlanLayout = view.findViewById(R.id.mealPlanLayout);
+//        trendingLayout = view.findViewById(R.id.trendingLayout);
         imgFeature = view.findViewById(R.id.imgFeature);
         txtFeatureName = view.findViewById(R.id.txtFeatureRecipeName);
         txtFeatureTime = view.findViewById(R.id.txtFeatureTime);
@@ -336,9 +347,11 @@ public class FeedFragment extends Fragment {
         trendingRecycler = view.findViewById(R.id.trendingRecycler);
         swipeRefreshLayout = view.findViewById(R.id.feedRefresh);
         pager = view.findViewById(R.id.viewPagerFeed);
-        lottie = view.findViewById(R.id.noInternetAnimation);
-        lottie1 = view.findViewById(R.id.noInternetAnimation1);
-        lottie2 = view.findViewById(R.id.noInternetAnimation2);
+        lottie = view.findViewById(R.id.feedNotAvailableAnimation);
+//        lottie1 = view.findViewById(R.id.noInternetAnimation1);
+//        lottie2 = view.findViewById(R.id.noInternetAnimation2);
+        loadingLayout = view.findViewById(R.id.loadingLayout);
+        errorLayout = view.findViewById(R.id.errorLayout);
         toolbar = view.findViewById(R.id.myToolBar);
         feedTitle2 = view.findViewById(R.id.feedTitle2);
         feedTitle3 = view.findViewById(R.id.feedTitle3);

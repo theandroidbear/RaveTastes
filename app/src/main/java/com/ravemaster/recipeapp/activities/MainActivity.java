@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.ravemaster.recipeapp.R;
+import com.ravemaster.recipeapp.adapters.ViewPagerAdapter;
 import com.ravemaster.recipeapp.fragments.FeedFragment;
 import com.ravemaster.recipeapp.fragments.OfflineFragment;
 import com.ravemaster.recipeapp.fragments.SearchFragment;
@@ -25,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private ViewPager2 viewPager2;
     private FeedFragment fragment;
+    private SearchFragment searchFragment;
+    private OfflineFragment offlineFragment;
+    private SettingsFragment settingsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
         fragment = new FeedFragment();
+        searchFragment = new SearchFragment();
+        offlineFragment = new OfflineFragment();
+        settingsFragment = new SettingsFragment();
         replaceFragment(fragment);
         bottomNavigationView.setOnItemSelectedListener(bottomListener);
 
@@ -53,28 +60,28 @@ public class MainActivity extends AppCompatActivity {
 //                item.setEnabled(true);
 //                item.setChecked(true);
 //                viewPager2.setCurrentItem(0);
-                replaceFragment(new FeedFragment());
+                replaceFragment(fragment);
                 return true;
             } else if (item.getItemId() == R.id.idSearch) {
 //                item.setCheckable(true);
 //                item.setEnabled(true);
 //                item.setChecked(true);
 //                viewPager2.setCurrentItem(1);
-                replaceFragment(new SearchFragment());
+                replaceFragment(searchFragment);
                 return true;
             }  else if (item.getItemId() == R.id.idLibrary) {
 //                item.setCheckable(true);
 //                item.setEnabled(true);
 //                item.setChecked(true);
 //                viewPager2.setCurrentItem(2);
-                replaceFragment(new OfflineFragment());
+                replaceFragment(offlineFragment);
                 return true;
             } else if (item.getItemId() == R.id.idSettings) {
 //                item.setCheckable(true);
 //                item.setEnabled(true);
 //                item.setChecked(true);
 //                viewPager2.setCurrentItem(3);
-                replaceFragment(new SettingsFragment());
+                replaceFragment(settingsFragment);
                 return true;
             }
             return false;

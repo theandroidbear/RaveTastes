@@ -46,14 +46,6 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.PagerViewHol
     public void onBindViewHolder(@NonNull PagerViewHolder holder, int position) {
         Item item = pagerModels.get(position);
         holder.name.setText(item.name);
-        int positive = item.user_ratings.count_positive;
-        int negative = item.user_ratings.count_negative;
-
-        int total = positive + negative;
-
-        double percent = ((double) positive/ total)*100;
-
-        String rating = String.format("%.1f%%",percent);
         Glide.with(context)
                 .load(item.thumbnail_url)
                 .placeholder(R.drawable.placeholder)

@@ -44,23 +44,30 @@
            <RelativeLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content">
-               <com.google.android.material.loadingindicator.LoadingIndicator
-                   android:layout_width="wrap_content"
+               <RelativeLayout
+                   android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:layout_centerInParent="true"
-                   android:id="@+id/feedLoadingIndicator"
-                   android:visibility="gone"
-                   android:layout_margin="10dp"/>
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_below="@+id/feedLoadingIndicator"
-                   android:text="Loading"
-                   android:layout_centerHorizontal="true"
-                   android:layout_margin="10dp"
-                   android:id="@+id/txtFeedLoading"
-                   android:textColor="?attr/colorTertiary"
-                   android:visibility="gone"/>
+                   android:orientation="vertical"
+                   android:id="@+id/loadingLayout"
+                   android:visibility="gone">
+                   <com.google.android.material.loadingindicator.LoadingIndicator
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerHorizontal="true"
+                       android:id="@+id/feedLoadingIndicator"
+                       android:visibility="visible"
+                       android:layout_marginTop="200dp"/>
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_below="@+id/feedLoadingIndicator"
+                       android:text="Loading..."
+                       android:layout_centerHorizontal="true"
+                       android:layout_margin="10dp"
+                       android:id="@+id/txtFeedLoading"
+                       android:textColor="?attr/colorTertiary"
+                       android:visibility="visible"/>
+               </RelativeLayout>
                <LinearLayout
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
@@ -175,25 +182,31 @@
                        android:visibility="visible"/>
 
                </LinearLayout>
-               <com.airbnb.lottie.LottieAnimationView
+               <RelativeLayout
                    android:layout_width="match_parent"
-                   android:layout_height="200dp"
-                   android:layout_centerInParent="true"
-                   app:lottie_autoPlay="true"
-                   app:lottie_rawRes="@raw/empty"
-                   android:visibility="gone"
-                   android:layout_margin="10dp"
-                   android:id="@+id/feedNotAvailableAnimation"/>
-               <TextView
-                   android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:layout_below="@+id/feedNotAvailableAnimation"
-                   android:text="Loading"
-                   android:layout_centerHorizontal="true"
-                   android:layout_margin="10dp"
-                   android:id="@+id/txtFeedError"
-                   android:textColor="?attr/colorError"
-                   android:visibility="gone"/>
+                   android:visibility="gone"
+                   android:id="@+id/errorLayout">
+                   <com.airbnb.lottie.LottieAnimationView
+                       android:layout_width="match_parent"
+                       android:layout_height="200dp"
+                       android:layout_centerHorizontal="true"
+                       app:lottie_autoPlay="true"
+                       app:lottie_rawRes="@raw/empty"
+                       android:visibility="visible"
+                       android:layout_marginTop="150dp"
+                       android:id="@+id/feedNotAvailableAnimation"/>
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_below="@+id/feedNotAvailableAnimation"
+                       android:text="Failed to fetch recipes..."
+                       android:layout_centerHorizontal="true"
+                       android:layout_margin="10dp"
+                       android:id="@+id/txtFeedError"
+                       android:textColor="?attr/colorError"
+                       android:visibility="visible"/>
+               </RelativeLayout>
            </RelativeLayout>
 
 

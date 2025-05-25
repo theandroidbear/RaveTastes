@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -20,15 +19,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.search.SearchBar;
 import com.google.android.material.search.SearchView;
 import com.ravemaster.recipeapp.R;
@@ -45,9 +40,6 @@ import com.ravemaster.recipeapp.viewmodelfactories.AutoCompleteFactory;
 import com.ravemaster.recipeapp.viewmodelfactories.RecipeListViewModelFactory;
 import com.ravemaster.recipeapp.viewmodels.AutoCompleteViewModel;
 import com.ravemaster.recipeapp.viewmodels.RecipesViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SearchFragment extends Fragment {
 
@@ -72,8 +64,6 @@ public class SearchFragment extends Fragment {
 
     AutoCompleteViewModel viewModel;
     AutoCompleteFactory autoCompleteFactory;
-
-    ArrayList<String> selected = new ArrayList<>();
 
     public int offset = 0;
     public String mainQuery = "";
@@ -106,41 +96,8 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
 
-        recipesViewModel.getFeedsLiveData().observe(getViewLifecycleOwner(), response -> {
-            swipeRefreshLayout.setRefreshing(false);
-            stopAnimations();
-            stopShimmer();
-            showLayouts();
-            showData(response);
+        fetch();
 
-        } );
-        recipesViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), message -> {
-            Toast.makeText(requireActivity(), "Unable to load recipes", Toast.LENGTH_SHORT).show();
-            swipeRefreshLayout.setRefreshing(false);
-            stopShimmer();
-            hideLayouts();
-            startAnimations();
-        } );
-        recipesViewModel.getLoadingLiveData().observe(getViewLifecycleOwner(), isLoading -> {
-            if (isLoading){
-                hideLayouts();
-                stopAnimations();
-                startShimmer();
-            } else {
-                swipeRefreshLayout.setRefreshing(false);
-                stopAnimations();
-                stopShimmer();
-            }
-        } );
-        viewModel.getFeedsLiveData().observe(getViewLifecycleOwner(), autoCompleteApiResponse -> {
-            showAutoCompleteRecycler(autoCompleteApiResponse);
-        });
-        viewModel.getErrorLiveData().observe(getViewLifecycleOwner(), message ->{
-            Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
-        });
-        viewModel.getLoadingLiveData().observe(getViewLifecycleOwner(), isLoading->{
-
-        });
         if (!isFetched){
             recipesViewModel.fetchRecipesList(offset,20,"",getMainQuery());
             viewModel.fetchAutoComplete("lasagna");
@@ -149,45 +106,39 @@ public class SearchFragment extends Fragment {
             Toast.makeText(requireActivity(), "Data has already been fetched", Toast.LENGTH_SHORT).show();
         }
 
-        chipGroup.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener() {
-            @Override
-            public void onCheckedChanged(@NonNull ChipGroup group, @NonNull List<Integer> checkedIds) {
-                if (checkedIds.isEmpty()){
-                    recipesViewModel.fetchRecipesList(0,20,"",mainQuery);
-                } else {
-                    for (int i:
-                            checkedIds){
-                        if (i == R.id.chipVegetarian){
-                            recipesViewModel.fetchRecipesList(0,20,"vegetarian",mainQuery);
-                        }
-                        else if (i == R.id.chipUnder30Mins){
-                            recipesViewModel.fetchRecipesList(0,20,"under_30_minutes",mainQuery);
-                        }else if (i == R.id.chipBreakfast){
-                            recipesViewModel.fetchRecipesList(0,20,"breakfast",mainQuery);
-                        }
-                        else if (i == R.id.chipDinner){
-                            recipesViewModel.fetchRecipesList(0,20,"dinner",mainQuery);
-                        }
-                        else if (i == R.id.chipParty){
-                            recipesViewModel.fetchRecipesList(0,20,"party",mainQuery);
-                        }
-                        else if (i == R.id.chipThai){
-                            recipesViewModel.fetchRecipesList(0,20,"thai",mainQuery);
-                        }
-                        else if (i == R.id.chipItalian){
-                            recipesViewModel.fetchRecipesList(0,20,"italian",mainQuery);
-                        }
+        chipGroup.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            if (checkedIds.isEmpty()){
+                recipesViewModel.fetchRecipesList(0,20,"",mainQuery);
+            } else {
+                for (int i:
+                        checkedIds){
+                    if (i == R.id.chipVegetarian){
+                        recipesViewModel.fetchRecipesList(0,20,"vegetarian",mainQuery);
+                    }
+                    else if (i == R.id.chipUnder30Mins){
+                        recipesViewModel.fetchRecipesList(0,20,"under_30_minutes",mainQuery);
+                    }else if (i == R.id.chipBreakfast){
+                        recipesViewModel.fetchRecipesList(0,20,"breakfast",mainQuery);
+                    }
+                    else if (i == R.id.chipDinner){
+                        recipesViewModel.fetchRecipesList(0,20,"dinner",mainQuery);
+                    }
+                    else if (i == R.id.chipParty){
+                        recipesViewModel.fetchRecipesList(0,20,"party",mainQuery);
+                    }
+                    else if (i == R.id.chipThai){
+                        recipesViewModel.fetchRecipesList(0,20,"thai",mainQuery);
+                    }
+                    else if (i == R.id.chipItalian){
+                        recipesViewModel.fetchRecipesList(0,20,"italian",mainQuery);
                     }
                 }
             }
         });
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                recipesViewModel.fetchRecipesList(offset,20,"",getMainQuery());
-                searchBar.setText("");
-            }
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            recipesViewModel.fetchRecipesList(offset,20,"",getMainQuery());
+            searchBar.setText("");
         });
 
         searchView.getEditText().addTextChangedListener(new TextWatcher() {
@@ -209,23 +160,61 @@ public class SearchFragment extends Fragment {
 
         searchView.setupWithSearchBar(searchBar);
 
-        searchView.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                        (event != null && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)){
-                    String query = v.getText().toString();
+        searchView.getEditText().setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                    (event != null && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)){
+                String query = v.getText().toString();
 
-                    recipesViewModel.fetchRecipesList(offset,20,"",setMainQuery(query));
-                    searchBar.setText(searchView.getText());
-                    searchView.hide();
-                    // Perform your search logic here
-                    return true;
-                }
-                return false;
+                recipesViewModel.fetchRecipesList(offset,20,"",setMainQuery(query));
+                searchBar.setText(searchView.getText());
+                searchView.hide();
+                // Perform your search logic here
+                return true;
             }
+            return false;
         });
 
+    }
+
+    private void fetch(){
+        recipesViewModel.getFeedsLiveData().observe(getViewLifecycleOwner(), response -> {
+            //dismiss swipe refresh
+            swipeRefreshLayout.setRefreshing(false);
+            //hide animations and shimmers
+            stopAnimations();
+            stopShimmer();
+            //show layouts and data
+            showLayouts();
+            showData(response);
+
+        } );
+        recipesViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), message -> {
+            Toast.makeText(requireActivity(), "Unable to load recipes", Toast.LENGTH_SHORT).show();
+            swipeRefreshLayout.setRefreshing(false);
+            //hide layouts and shimmer
+            stopShimmer();
+            hideLayouts();
+            //start animation
+            startAnimations();
+        } );
+        recipesViewModel.getLoadingLiveData().observe(getViewLifecycleOwner(), isLoading -> {
+            if (isLoading){
+                hideLayouts();
+                stopAnimations();
+                startShimmer();
+            } else {
+                swipeRefreshLayout.setRefreshing(false);
+                stopAnimations();
+                stopShimmer();
+            }
+        } );
+        viewModel.getFeedsLiveData().observe(getViewLifecycleOwner(), this::showAutoCompleteRecycler);
+        viewModel.getErrorLiveData().observe(getViewLifecycleOwner(), message ->{
+            Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
+        });
+        viewModel.getLoadingLiveData().observe(getViewLifecycleOwner(), isLoading->{
+
+        });
     }
 
     private void startShimmer(){
@@ -292,14 +281,6 @@ public class SearchFragment extends Fragment {
             recipesViewModel.fetchRecipesList(offset,10,"", result.display);
         }
     };
-
-    private int nextPage(){
-        return offset += 20;
-    }
-
-    private int previousPage(int page){
-        return offset -= 20;
-    }
     private String getMainQuery(){
         return mainQuery;
     }
