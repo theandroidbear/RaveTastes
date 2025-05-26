@@ -29,7 +29,6 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.loadingindicator.LoadingIndicator;
 import com.ravemaster.recipeapp.adapters.FeatureAdapter;
 import com.ravemaster.recipeapp.adapters.PagerAdapter;
 import com.ravemaster.recipeapp.api.getfeed.models.Item;

@@ -102,7 +102,6 @@ public class SearchFragment extends Fragment {
             recipesViewModel.fetchRecipesList(offset,20,"",getMainQuery());
             viewModel.fetchAutoComplete("lasagna");
             isFetched = true;
-            return;
         }
 
         chipGroup.setOnCheckedStateChangeListener((group, checkedIds) -> {

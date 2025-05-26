@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -21,7 +21,8 @@
                 android:indeterminate="false"
                 android:id="@+id/linearSpeakAloud"
                 android:visibility="gone"
-                app:indicatorColor="?attr/colorTertiary"/>
+                app:indicatorColor="?attr/colorTertiary"
+                android:layout_alignParentTop="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -29,6 +30,7 @@
                 android:layout_gravity="start"
                 android:text="Step one"
                 android:id="@+id/instructionPosition"
+                android:layout_below="@id/linearSpeakAloud"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
@@ -47,32 +49,32 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                android:layout_gravity="start"
-                android:textAlignment="viewStart"/>
+                android:layout_below="@id/instructionPosition"/>
 
-            <com.google.android.material.button.MaterialSplitButton
-                android:id="@+id/btnTTS"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
-
-                <Button
-                    style="?attr/materialSplitButtonLeadingFilledTonalStyle"
+                android:layout_marginTop="25dp"
+                android:layout_below="@id/txtInstructionStep">
+                <com.google.android.material.progressindicator.CircularProgressIndicator
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Read aloud"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/speechCircular"
+                    android:indeterminate="true"
+                    app:indicatorSize="50dp"
+                    app:indicatorColor="?attr/colorTertiary"
+                    android:visibility="gone"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
                     app:icon="@drawable/ic_tts"
-                    android:id="@+id/btnSpeak"/>
-
-                <Button
-                    android:id="@+id/chooseSpeed"
-                    style="?attr/materialSplitButtonIconFilledTonalStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="Read instruction aloud"
-                    app:icon="@drawable/ic_split_button_down" />
-            </com.google.android.material.button.MaterialSplitButton>
-        </LinearLayout>
+                    android:id="@+id/btnTTS"/>
+            </RelativeLayout>
+        </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 
 
