@@ -345,7 +345,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         ratings.setText(ratings1);
         servings.setText(servings1);
 
-        if (time1.equals("0")){
+        if (time1.equals("0")||time1.isEmpty()||time1 == null){
             time.setText("60 min");
         } else {
             time.setText(time1+" min");

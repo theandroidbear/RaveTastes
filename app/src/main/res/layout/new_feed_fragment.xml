@@ -1,217 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toolBarLayout"
-        android:layout_gravity="top">
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/collapsingToolbarLayoutMediumSize"
-            style="?attr/collapsingToolbarLayoutMediumStyle"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:contentScrim="?attr/colorSurface"
-            app:expandedTitleTextAppearance="@style/ExpandedToolbarTitle"
-            app:collapsedTitleTextAppearance="@style/CollapsedToolbarTitle"
-            app:collapsedTitleTextColor="?attr/colorPrimary"
-            app:expandedTitleTextColor="?attr/colorPrimary">
-            <com.google.android.material.appbar.MaterialToolbar
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:id="@+id/myToolBar"
-                app:title="@string/app_name"
-                app:titleTextColor="?attr/colorPrimary"
-                android:elevation="0dp"
-                app:layout_collapseMode="pin"/>
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-    
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/feedRefresh"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
-
-           <RelativeLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
-               <RelativeLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:orientation="vertical"
-                   android:id="@+id/loadingLayout"
-                   android:visibility="gone">
-                   <com.google.android.material.loadingindicator.LoadingIndicator
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_centerHorizontal="true"
-                       android:id="@+id/feedLoadingIndicator"
-                       android:visibility="visible"
-                       android:layout_marginTop="200dp"/>
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_below="@+id/feedLoadingIndicator"
-                       android:text="Loading..."
-                       android:layout_centerHorizontal="true"
-                       android:layout_margin="10dp"
-                       android:id="@+id/txtFeedLoading"
-                       android:textColor="?attr/colorTertiary"
-                       android:visibility="visible"/>
-               </RelativeLayout>
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:orientation="vertical"
-                   android:layout_centerInParent="true"
-                   android:visibility="visible"
-                   android:id="@+id/feedMainContent">
-
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="Got a tasty dish in mind?"
-                       android:layout_margin="16dp"
-                       android:textStyle="bold"
-                       android:id="@+id/welcomeText"/>
-
-                   <TextView
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:text=""
-                       android:id="@+id/txtFeatureRecipeName"
-                       android:layout_marginStart="16dp"
-                       android:layout_marginBottom="8dp"
-                       android:layout_marginEnd="16dp"
-                       android:textSize="20sp"
-                       android:textStyle="bold"
-                       android:singleLine="true"
-                       android:scrollHorizontally="true"
-                       android:ellipsize="marquee"
-                       android:marqueeRepeatLimit="marquee_forever"
-                       android:textColor="?attr/colorPrimary"/>
-
-                   <LinearLayout
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:orientation="vertical"
-                       android:gravity="center"
-                       android:id="@+id/featureLayout1">
-                       <include layout="@layout/feature_item"/>
-                   </LinearLayout>
-                   <LinearLayout
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:orientation="vertical"
-                       android:gravity="center"
-                       android:visibility="gone"
-                       android:id="@+id/featureLayout2">
-                       <include layout="@layout/featured_recipes"/>
-                   </LinearLayout>
-
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text=""
-                       android:id="@+id/txtMealPlanTitle"
-                       android:layout_marginStart="16dp"
-                       android:layout_marginBottom="8dp"
-                       android:layout_marginEnd="16dp"
-                       android:layout_marginTop="8dp"
-                       android:textSize="20sp"
-                       android:textStyle="bold"
-                       android:layout_centerVertical="true"
-                       android:layout_alignParentStart="true"
-                       android:textColor="?attr/colorPrimary"/>
-
-                   <androidx.recyclerview.widget.RecyclerView
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:layout_margin="12dp"
-                       android:id="@+id/mealPlanRecycler"
-                       app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"/>
-
-                   <TextView
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:text=""
-                       android:layout_marginStart="16dp"
-                       android:layout_marginBottom="8dp"
-                       android:layout_marginTop="8dp"
-                       android:layout_marginEnd="16dp"
-                       android:textSize="20sp"
-                       android:textStyle="bold"
-                       android:textColor="?attr/colorPrimary"
-                       android:id="@+id/feedTitle2"/>
-
-                   <androidx.recyclerview.widget.RecyclerView
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:id="@+id/trendingRecycler"
-                       android:orientation="vertical"
-                       android:layout_margin="12dp"/>
-
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text=""
-                       android:layout_marginStart="16dp"
-                       android:layout_marginBottom="8dp"
-                       android:layout_marginEnd="16dp"
-                       android:layout_marginTop="8dp"
-                       android:textSize="20sp"
-                       android:textStyle="bold"
-                       android:textColor="?attr/colorPrimary"
-                       android:id="@+id/feedTitle3"/>
-
-                   <androidx.viewpager2.widget.ViewPager2
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:id="@+id/viewPagerFeed"
-                       android:paddingStart="16dp"
-                       android:paddingEnd="16dp"
-                       android:visibility="visible"/>
-
-               </LinearLayout>
-               <RelativeLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:visibility="gone"
-                   android:id="@+id/errorLayout">
-                   <com.airbnb.lottie.LottieAnimationView
-                       android:layout_width="match_parent"
-                       android:layout_height="200dp"
-                       android:layout_centerHorizontal="true"
-                       app:lottie_autoPlay="true"
-                       app:lottie_rawRes="@raw/empty"
-                       android:visibility="visible"
-                       android:layout_marginTop="150dp"
-                       android:id="@+id/feedNotAvailableAnimation"/>
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_below="@+id/feedNotAvailableAnimation"
-                       android:text="Failed to fetch recipes..."
-                       android:layout_centerHorizontal="true"
-                       android:layout_margin="10dp"
-                       android:id="@+id/txtFeedError"
-                       android:textColor="?attr/colorError"
-                       android:visibility="visible"/>
-               </RelativeLayout>
-           </RelativeLayout>
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/toolBarLayout"-->
+<!--        android:layout_gravity="top">-->
+<!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/collapsingToolbarLayoutMediumSize"-->
+<!--            style="?attr/collapsingToolbarLayoutMediumStyle"-->
+<!--            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"-->
+<!--            app:contentScrim="?attr/colorSurface"-->
+<!--            app:expandedTitleTextAppearance="@style/ExpandedToolbarTitle"-->
+<!--            app:collapsedTitleTextAppearance="@style/CollapsedToolbarTitle"-->
+<!--            app:collapsedTitleTextColor="?attr/colorPrimary"-->
+<!--            app:expandedTitleTextColor="?attr/colorPrimary">-->
+<!--            <com.google.android.material.appbar.MaterialToolbar-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="?attr/actionBarSize"-->
+<!--                android:id="@+id/myToolBar"-->
+<!--                app:title="@string/app_name"-->
+<!--                app:titleTextColor="?attr/colorPrimary"-->
+<!--                android:elevation="0dp"-->
+<!--                app:layout_collapseMode="pin"/>-->
+<!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
 
 
-        </androidx.core.widget.NestedScrollView>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

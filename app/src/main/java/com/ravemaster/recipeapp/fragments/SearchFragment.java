@@ -102,8 +102,7 @@ public class SearchFragment extends Fragment {
             recipesViewModel.fetchRecipesList(offset,20,"",getMainQuery());
             viewModel.fetchAutoComplete("lasagna");
             isFetched = true;
-        } else {
-            Toast.makeText(requireActivity(), "Data has already been fetched", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         chipGroup.setOnCheckedStateChangeListener((group, checkedIds) -> {

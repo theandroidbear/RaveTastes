@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:id="@+id/imgFeatureItem"
-            android:src="@drawable/placeholder"
             android:scaleType="centerCrop"/>
         <TextView
             android:layout_width="match_parent"

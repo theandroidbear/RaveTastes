@@ -54,7 +54,7 @@ import java.util.List;
 public class FeedFragment extends Fragment {
 
     public ShimmerFrameLayout featurePlaceHolder, featurePlaceHolder1, mealPlanPlaceHolder,trendingPlaceHolder;
-    public LinearLayout featureLayout,featureLayout1,mealPlanLayout,trendingLayout, mainLayout;
+    public LinearLayout featureLayout2,featureLayout1,mealPlanLayout,trendingLayout, mainLayout;
     ImageView imgFeature;
     TextView txtFeatureName, txtFeatureRating, txtFeatureTime, txtFeatureServings,txtMealPlanTitle,txtUsername,feedTitle2,feedTitle3;
     RecyclerView mealPlanRecycler,trendingRecycler,featureRecycler;
@@ -99,7 +99,7 @@ public class FeedFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.new_feed_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_feed, container, false);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class FeedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
         fetch();
-        ((AppCompatActivity)requireActivity()).setSupportActionBar(toolbar);
+//        ((AppCompatActivity)requireActivity()).setSupportActionBar(toolbar);
 
         if (!isfetched){
             feedViewModel.fetchFeedList(false);
@@ -153,71 +153,69 @@ public class FeedFragment extends Fragment {
                 hideAnimation();
                 hideLayouts();
                 startShimmer();
+                Toast.makeText(requireContext(), "Refreshing feed...", Toast.LENGTH_SHORT).show();
             }else{
                 swipeRefreshLayout.setRefreshing(false);
                 stopShimmer();
                 hideAnimation();
+                showLayouts();
             }
         });
     }
     private void showAnimation(){
-        errorLayout.setVisibility(VISIBLE);
+//        errorLayout.setVisibility(VISIBLE);
         lottie.setVisibility(VISIBLE);
         lottie.animate();
-//        lottie1.setVisibility(VISIBLE);
-//        lottie1.animate().setStartDelay(2500).setDuration(2500);
-//        lottie2.setVisibility(VISIBLE);
-//        lottie2.animate().setStartDelay(5000).setDuration(5000);
+        lottie1.setVisibility(VISIBLE);
+        lottie1.animate().setStartDelay(2500).setDuration(2500);
+        lottie2.setVisibility(VISIBLE);
+        lottie2.animate().setStartDelay(5000).setDuration(5000);
     }
     private void hideAnimation(){
-        errorLayout.setVisibility(GONE);
+//        errorLayout.setVisibility(GONE);
         lottie.setVisibility(GONE);
-//        lottie1.setVisibility(GONE);
-//        lottie2.setVisibility(GONE);
+        lottie1.setVisibility(GONE);
+        lottie2.setVisibility(GONE);
     }
     private void startShimmer(){
-        loadingLayout.setVisibility(VISIBLE);
-//        featurePlaceHolder.setVisibility(VISIBLE);
-//        featurePlaceHolder.startShimmer();
-//        mealPlanPlaceHolder.setVisibility(VISIBLE);
-//        mealPlanPlaceHolder.startShimmer();
-//        trendingPlaceHolder.setVisibility(VISIBLE);
-//        trendingPlaceHolder.startShimmer();
+//        loadingLayout.setVisibility(VISIBLE);
+        featurePlaceHolder.setVisibility(VISIBLE);
+        featurePlaceHolder.startShimmer();
+        mealPlanPlaceHolder.setVisibility(VISIBLE);
+        mealPlanPlaceHolder.startShimmer();
+        trendingPlaceHolder.setVisibility(VISIBLE);
+        trendingPlaceHolder.startShimmer();
+        txtFeatureName.setText("");
+        txtMealPlanTitle.setText("");
+        feedTitle2.setText("");
+        feedTitle3.setText("");
     }
     private void stopShimmer(){
-        loadingLayout.setVisibility(GONE);
-//        featurePlaceHolder.stopShimmer();
-//        featurePlaceHolder.setVisibility(GONE);
-//        mealPlanPlaceHolder.stopShimmer();
-//        mealPlanPlaceHolder.setVisibility(GONE);
-//        trendingPlaceHolder.stopShimmer();
-//        trendingPlaceHolder.setVisibility(GONE);
+//        loadingLayout.setVisibility(GONE);
+        featurePlaceHolder.stopShimmer();
+        featurePlaceHolder.setVisibility(GONE);
+        mealPlanPlaceHolder.stopShimmer();
+        mealPlanPlaceHolder.setVisibility(GONE);
+        trendingPlaceHolder.stopShimmer();
+        trendingPlaceHolder.setVisibility(GONE);
     }
     private void showLayouts(){
-        mainLayout.setVisibility(VISIBLE);
-//        featureLayout.setVisibility(VISIBLE);
-//        mealPlanLayout.setVisibility(VISIBLE);
-//        trendingLayout.setVisibility(VISIBLE);
-//        pager.setVisibility(VISIBLE);
+//        mainLayout.setVisibility(VISIBLE);
+        featureLayout1.setVisibility(VISIBLE);
+        mealPlanLayout.setVisibility(VISIBLE);
+        trendingLayout.setVisibility(VISIBLE);
+        pager.setVisibility(VISIBLE);
     }
     private void hideLayouts(){
-        mainLayout.setVisibility(GONE);
-//        featureLayout.setVisibility(GONE);
-//        mealPlanLayout.setVisibility(GONE);
-//        trendingLayout.setVisibility(GONE);
-//        pager.setVisibility(GONE);
+//        mainLayout.setVisibility(GONE);
+        featureLayout1.setVisibility(GONE);
+        mealPlanLayout.setVisibility(GONE);
+        trendingLayout.setVisibility(GONE);
+        pager.setVisibility(GONE);
     }
 
     private void showData(FeedsApiResponse response) {
-        if (response.results.get(0).item.user_ratings == null){
-            showManyFeatured(response);
-            featureLayout1.setVisibility(VISIBLE);
-            featureLayout.setVisibility(GONE);
-        } else {
-            showFeatured(response);
-            featureLayout.setVisibility(VISIBLE);
-            featureLayout1.setVisibility(GONE);
-        }
+        showFeatured(response);
         showMealPlanAdapter(response);
         showTrendingRecipes(response);
         showAppetizers(response);
@@ -249,17 +247,19 @@ public class FeedFragment extends Fragment {
         double percent = ((double) positive / total ) * 100;
         String ratings = String.format("%.1f%%",percent);
 
-        String time = String.valueOf(response.results.get(0).item.cook_time_minutes)+" min";
+
+
+        String time = String.valueOf(response.results.get(0).item.total_time_minutes);
 
         String servings = String.valueOf(response.results.get(0).item.num_servings)+ " people";
 
         txtFeatureName.setText("Featured: "+name);
         txtFeatureName.setSelected(true);
         txtFeatureRating.setText(ratings);
-        if (time.equals("0")){
+        if (time.isEmpty() || time == null){
             txtFeatureTime.setText("60 min");
         } else {
-            txtFeatureTime.setText(time);
+            txtFeatureTime.setText(time+" min");
         }
         txtFeatureServings.setText(servings);
     }
@@ -328,32 +328,31 @@ public class FeedFragment extends Fragment {
     };
 
     private void initViews(View view) {
-//        featurePlaceHolder = view.findViewById(R.id.featurePlaceholderLayout);
-//        mealPlanPlaceHolder = view.findViewById(R.id.mealPlanPlaceholderLayout);
-//        trendingPlaceHolder = view.findViewById(R.id.trendingPlaceholderLayout);
-        featureLayout = view.findViewById(R.id.featureLayout1);
-        featureLayout1 = view.findViewById(R.id.featureLayout2);
-        mainLayout = view.findViewById(R.id.feedMainContent);
-//        mealPlanLayout = view.findViewById(R.id.mealPlanLayout);
-//        trendingLayout = view.findViewById(R.id.trendingLayout);
+        featurePlaceHolder = view.findViewById(R.id.featurePlaceholderLayout);
+        mealPlanPlaceHolder = view.findViewById(R.id.mealPlanPlaceholderLayout);
+        trendingPlaceHolder = view.findViewById(R.id.trendingPlaceholderLayout);
+        featureLayout1 = view.findViewById(R.id.featureLayout);
+//        mainLayout = view.findViewById(R.id.feedMainContent);
+        mealPlanLayout = view.findViewById(R.id.mealPlanLayout);
+        trendingLayout = view.findViewById(R.id.trendingLayout);
         imgFeature = view.findViewById(R.id.imgFeature);
         txtFeatureName = view.findViewById(R.id.txtFeatureRecipeName);
+        txtMealPlanTitle = view.findViewById(R.id.txtMealPlanTitle);
+        feedTitle2 = view.findViewById(R.id.feedTitle2);
+        feedTitle3 = view.findViewById(R.id.feedTitle3);
         txtFeatureTime = view.findViewById(R.id.txtFeatureTime);
         txtFeatureRating = view.findViewById(R.id.txtFeatureRating);
         txtFeatureServings = view.findViewById(R.id.txtFeatureServing);
         mealPlanRecycler = view.findViewById(R.id.mealPlanRecycler);
         featureRecycler = view.findViewById(R.id.featureRecycler);
-        txtMealPlanTitle = view.findViewById(R.id.txtMealPlanTitle);
         trendingRecycler = view.findViewById(R.id.trendingRecycler);
         swipeRefreshLayout = view.findViewById(R.id.feedRefresh);
         pager = view.findViewById(R.id.viewPagerFeed);
-        lottie = view.findViewById(R.id.feedNotAvailableAnimation);
-//        lottie1 = view.findViewById(R.id.noInternetAnimation1);
-//        lottie2 = view.findViewById(R.id.noInternetAnimation2);
-        loadingLayout = view.findViewById(R.id.loadingLayout);
-        errorLayout = view.findViewById(R.id.errorLayout);
+        lottie = view.findViewById(R.id.noInternetAnimation);
+        lottie1 = view.findViewById(R.id.noInternetAnimation1);
+        lottie2 = view.findViewById(R.id.noInternetAnimation2);
+//        loadingLayout = view.findViewById(R.id.loadingLayout);
+//        errorLayout = view.findViewById(R.id.errorLayout);
         toolbar = view.findViewById(R.id.myToolBar);
-        feedTitle2 = view.findViewById(R.id.feedTitle2);
-        feedTitle3 = view.findViewById(R.id.feedTitle3);
     }
 }

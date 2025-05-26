@@ -31,10 +31,9 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
-            android:scrollHorizontally="true"
             android:singleLine="true"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="@integer/material_motion_duration_long_1"/>
+            android:ellipsize="end"
+            android:textColor="?attr/colorPrimary"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -54,7 +53,8 @@
                 android:id="@+id/txtTrendingRating"
                 android:layout_centerVertical="true"
                 android:text="rating"
-                android:layout_margin="5dp"/>
+                android:layout_margin="5dp"
+                android:textColor="?attr/colorTertiary"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -74,7 +74,8 @@
                 android:id="@+id/txtTrendingTime"
                 android:layout_centerVertical="true"
                 android:text="10 min"
-                android:layout_margin="5dp"/>
+                android:layout_margin="5dp"
+                android:textColor="?attr/colorTertiary"/>
         </RelativeLayout>
 
     </LinearLayout>

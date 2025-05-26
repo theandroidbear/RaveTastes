@@ -19,6 +19,7 @@
             android:padding="5dp"
             android:text="Recipe name"
             android:id="@+id/libraryName"
+            android:textColor="?attr/colorPrimary"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"/>
 

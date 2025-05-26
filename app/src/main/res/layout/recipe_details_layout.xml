@@ -81,7 +81,8 @@
                                     android:text="rating"
                                     android:id="@+id/txtDetailRating"
                                     android:layout_centerVertical="true"
-                                    android:layout_toEndOf="@id/detailDummy1"/>
+                                    android:layout_toEndOf="@id/detailDummy1"
+                                    android:textColor="?attr/colorTertiary"/>
 
                             </RelativeLayout>
                             <RelativeLayout
@@ -101,7 +102,8 @@
                                     android:text="time"
                                     android:id="@+id/txtDetailTime"
                                     android:layout_centerVertical="true"
-                                    android:layout_toEndOf="@id/detailDummy2"/>
+                                    android:layout_toEndOf="@id/detailDummy2"
+                                    android:textColor="?attr/colorTertiary"/>
 
                             </RelativeLayout>
                             <RelativeLayout
@@ -121,7 +123,8 @@
                                     android:text="servings"
                                     android:id="@+id/txtDetailServings"
                                     android:layout_centerVertical="true"
-                                    android:layout_toEndOf="@id/detailDummy3"/>
+                                    android:layout_toEndOf="@id/detailDummy3"
+                                    android:textColor="?attr/colorTertiary"/>
 
                             </RelativeLayout>
 
@@ -135,8 +138,7 @@
                             android:layout_marginEnd="15dp"
                             android:layout_marginBottom="15dp"
                             android:id="@+id/txtDetailDescription"
-                            android:textColor="?attr/colorTertiary"
-                            android:textSize="18sp"
+                            android:textColor="?attr/colorSecondary"
                             android:gravity="start"
                             android:textAlignment="viewStart"/>
                     </LinearLayout>
@@ -239,8 +241,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
                             android:id="@+id/txtIngredients"
-                            android:textColor="?attr/colorTertiary"
-                            android:textSize="18sp"
+                            android:textColor="?attr/colorSecondary"
                             android:text="~Food item"
                             />
                     </LinearLayout>

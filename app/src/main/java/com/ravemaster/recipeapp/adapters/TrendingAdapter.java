@@ -58,7 +58,7 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Trendi
 
         holder.name.setText(name);
         holder.name.setSelected(true);
-        if (time.equals("0")){
+        if (time.equals("0") || time.isEmpty() || time == null){
             holder.time.setText("60 min");
         } else {
             holder.time.setText(time+" min");

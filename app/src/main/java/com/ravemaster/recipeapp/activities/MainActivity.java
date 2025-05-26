@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        SplashScreen.installSplashScreen(this);
         setContentView(R.layout.activity_main);
         initViews();
 
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 //                item.setEnabled(true);
 //                item.setChecked(true);
 //                viewPager2.setCurrentItem(0);
-                replaceFragment(fragment);
+                replaceFragment(new FeedFragment());
                 return true;
             } else if (item.getItemId() == R.id.idSearch) {
 //                item.setCheckable(true);

@@ -32,10 +32,9 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
-            android:scrollHorizontally="true"
             android:singleLine="true"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"/>
+            android:ellipsize="end"
+            android:textColor="?attr/colorPrimary"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -59,7 +58,8 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="rating" />
+                android:text="rating"
+                android:textColor="?attr/colorTertiary"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -83,7 +83,8 @@
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:ellipsize="marquee"
-                android:marqueeRepeatLimit="marquee_forever"/>
+                android:marqueeRepeatLimit="marquee_forever"
+                android:textColor="?attr/colorTertiary"/>
         </RelativeLayout>
 
     </LinearLayout>

@@ -61,7 +61,7 @@ public class SimilarAdapter extends RecyclerView.Adapter<SimilarAdapter.SimilarV
         double percent = ((double) positive/ total)*100;
 
         String rating = String.format("%.1f%%",percent);
-        if (time.equals("0")){
+        if (time.equals("0")||time.isEmpty()||time == null){
             holder.time.setText("60 min");
         } else {
             holder.time.setText(time+" min");
